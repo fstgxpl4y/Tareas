@@ -5,7 +5,8 @@ public class Tarea {
     private String descripcion;
     private boolean completada;
 
-    public Tarea(String t, String c) {
+    public Tarea(int id, String t, String c) {
+        this.id = id;
         titulo = t;
         descripcion = c;
         completada = false;
@@ -18,5 +19,9 @@ public class Tarea {
 
     boolean getCompletada(){
         return completada;
+    }
+
+    int getId(){
+        return id;
     }
 }
