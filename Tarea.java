@@ -1,20 +1,22 @@
 public class Tarea {
-    
+
+    //ATRIBUTOS
     private int id;
     private String titulo;
     private String descripcion;
     private boolean completada;
-
+    
+    //Constructor
     public Tarea(int id, String t, String c) {
         this.id = id;
         titulo = t;
         descripcion = c;
         completada = false;
     }
+    //METODOS
 
     void setCompletada(boolean estadoNuevo){
         completada = estadoNuevo;
-
     }
 
     boolean getCompletada(){
@@ -24,4 +26,5 @@ public class Tarea {
     int getId(){
         return id;
     }
+
 }
