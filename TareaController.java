@@ -1,38 +1,37 @@
-import java.util.ArrayList;
-import java.util.List;
-
 public class TareaController {
-    
-    //atributos
-
-    private List<Tarea> listaDeTareas = new ArrayList<Tarea>(); 
-
+    private AlmacenarTareas almacenamiento;
     private int contadorTareas;
 
-    public TareaController(){
-        contadorTareas = 0;
+    public TareaController(AlmacenarTareas almacenamiento) {
+        this.almacenamiento = almacenamiento;
+        this.contadorTareas = 0;
     }
 
     public Tarea agregarTarea(String titulo, String descripcion) {
         Tarea nueva = new Tarea(contadorTareas++, titulo, descripcion);
-        listaDeTareas.add(nueva);
+        almacenamiento.guardar(nueva);
         return nueva;
     }
 
     public void completarTarea(int id) {
-        if (id > contadorTareas){
+        Tarea t = almacenamiento.buscarPorId(id);
+        if (t == null) {
             throw new IllegalArgumentException("No hay una tarea con el ID: " + id);
         }
-        for (Tarea t : listaDeTareas) {
-            if (t.getId() == id) {
-                if (t.getCompletada()) {
-                    throw new IllegalStateException("La tarea ya estaba completada.");
-                }
-                t.setCompletada(true);
-            }
+        if (t.getCompletada()) {
+            throw new IllegalStateException("La tarea ya estaba completada.");
         }
-        
+        t.setCompletada(true);
     }
 
+    public void eliminarTarea(int id) {
+        boolean eliminada = almacenamiento.eliminar(id);
+        if (!eliminada) {
+            throw new IllegalArgumentException("No hay una tarea con el ID: " + id);
+        }
+    }
 
+    public Tarea buscarTarea(int id) {
+        return almacenamiento.buscarPorId(id);
+    }
 }
